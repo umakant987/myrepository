@@ -1,0 +1,120 @@
+Interface:
+-------------
+export interface StudentInterface{
+		SID: number;
+		firstName: String;
+		lastName: String;
+		DOB: String;
+		stipend: number
+}
+
+****************************************************
+Service:
+---------
+import { Injectable } from '@angular/core';
+import { StudentInterface } from './studentInterface';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';   /* rxjx => Reactive x JavaScript library for asynchronous activity*/
+import 'rxjs/add/operator/map';       /*map operator is used to perform major activities like reading file*/
+import 'rxjs/add/operator/catch'; 
+//import 'rxjs/add/operator/throw';
+import 'rxjs/add/observable/throw';
+
+@Injectable()
+export class StudentService{
+	
+	/* This is for
+	 directly reading the data from service itself
+	getStudents() : StudentInterface[]{
+
+	return [
+			{SID:101, firstName:'Umakant', lastName:'Lakhawar', DOB: '06/10/1991', stipend:50000},
+			{SID:102, firstName:'Prem', lastName:'Maurya', DOB: '08/11/1985', stipend:40000},
+			{SID:103, firstName:'Sanskar', lastName:'Suman', DOB: '11/23/1992', stipend:30000},
+			{SID:103, firstName:'Sanskar', lastName:'Suman', DOB: '11/23/1992', stipend:30000},
+			{SID:104, firstName:'Yatish', lastName:'Upmanyu', DOB: '01/15/1993', stipend:20000}		
+		]
+	}
+	*/
+	
+	// Reading data from JSON file 
+	constructor(private http: Http){}
+	
+	getStudents(): Observable<StudentInterface[]>{
+		return this.http.get('./app/student/students.json')
+		.map((resp: Response) => resp.json())
+	//.catch(this.errorHandle);
+	}
+	// errorHandle(error: Response){
+	// 	console.error(error);             //console.log()   => Prints any message in the console
+	// 									  //console.error() => Prints any error in red color on the console
+	// 	throw Observable.throw(error);
+	// }
+************************************************************************************************************
+
+Student Component:
+------------------
+
+import { Component, OnInit } from '@angular/core';      /* OnInit interface helps to call the http service asynchronously */
+import { StudentService } from './student.service';
+import { StudentInterface } from './studentInterface';
+
+@Component({
+  templateUrl: 'app/student/student.component.html',
+  providers: [StudentService]
+})
+export class StudentComponent implements OnInit { 
+
+//First ways:
+/* Reading data directly from component class Without using services */
+/*	students: StudentInterface[] = [
+	{SID:101, firstName:'Umakant', lastName:'Lakhawar', DOB: '06/10/1991', stipend:50000},
+	{SID:102, firstName:'Prem', lastName:'Maurya', DOB: '08/11/1985', stipend:40000},
+	{SID:103, firstName:'Sanskar', lastName:'Suman', DOB: '11/23/1992', stipend:30000},
+	{SID:103, firstName:'Sanskar', lastName:'Suman', DOB: '11/23/1992', stipend:30000},
+	{SID:104, firstName:'Yatish', lastName:'Upmanyu', DOB: '01/15/1993', stipend:20000}
+	]
+	
+	*/
+	
+	students: StudentInterface[] = null;
+	msg: String = 'No Records Found...';
+	
+	//Second way: Reading data from Student service
+	
+	constructor(private studService: StudentService){
+		//this.students = this.studService.getStudents();   //this way of calling method is slow
+	}
+
+	//Third way: Reading data from JSON using via Student Service
+	ngOnInit(){
+		this.studService.getStudents().
+		subscribe((studData) => this.students = studData,
+		(error) => {
+			this.msg = 'Please try later...';
+		}
+	);
+	}	
+}
+****************************************************************************************************************
+
+Student.json
+---------------
+[
+			{
+			"STD":101, 
+			"firstName":"Umakant", 
+			"lastName":"Lakhawar", 
+			"DOB": "06/10/1991", 
+			"stipend":50000
+			},
+			
+			{
+			"STD":102, 
+			"firstName":"Prem", 
+			"lastName":"Maurya", 
+			"DOB": "08/11/1985", 
+			"stipend":40000
+			},		
+]
+**************************************************************************************
