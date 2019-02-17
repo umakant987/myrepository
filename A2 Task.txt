@@ -23,18 +23,16 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class StudentService{
 	
-	/* This is for
-	 directly reading the data from service itself
+	/* This is for directly reading the data from service itself
 	getStudents() : StudentInterface[]{
-
-	return [
+		return [
 			{SID:101, firstName:'Umakant', lastName:'Lakhawar', DOB: '06/10/1991', stipend:50000},
 			{SID:102, firstName:'Prem', lastName:'Maurya', DOB: '08/11/1985', stipend:40000},
 			{SID:103, firstName:'Sanskar', lastName:'Suman', DOB: '11/23/1992', stipend:30000},
 			{SID:103, firstName:'Sanskar', lastName:'Suman', DOB: '11/23/1992', stipend:30000},
 			{SID:104, firstName:'Yatish', lastName:'Upmanyu', DOB: '01/15/1993', stipend:20000}		
 		]
-	}
+	  }
 	*/
 	
 	// Reading data from JSON file 
@@ -46,8 +44,8 @@ export class StudentService{
 	//.catch(this.errorHandle);
 	}
 	// errorHandle(error: Response){
-	// 	console.error(error);             //console.log()   => Prints any message in the console
-	// 									  //console.error() => Prints any error in red color on the console
+	// 	console.error(error);            //console.log()   => Prints any message in the console
+	// 					//console.error() => Prints any error in red color on the console
 	// 	throw Observable.throw(error);
 	// }
 ************************************************************************************************************
