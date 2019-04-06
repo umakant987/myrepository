@@ -1,0 +1,99 @@
+cshtml
+https://fileinfo.com/extension/cshtml
+refers to the razor (An ASP.NET view engine)
+https://psl-tfsapp2015.persistent.co.in/tfs/FB_Collection1/Atlas_Copco_CEM_Falcon/_versionControl?path=%24%2FAtlas_Copco_CEM_Falcon%2FFalcon_dev%2FFalcon.IdentityFramework%2FViews%2FAccount%2FLogin.cshtml&version=T&_a=contents
+
++++++++++++===+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Response Rate Chart:
+
+<div style="
+    position: absolute;
+    top: 73%;
+    left: 44%;
+    font-size: 1em;
+    z-index:1;
+    text-align: center;
+    ">
+    30% 
+    <span style="display:block">Response Rate</span>
+</div>
+---------------------------------------------------------------------------
+International Language Environments Guide-Manish-1000 comma separated no.
+https://docs.oracle.com/cd/E19455-01/806-0169/overview-9/index.html
+The decimal separator is also called the radix character. UK,US =>(.) French=> (,)
+---------------------------------------------------------------------------------------------
+Working offline with JSON Object:
+Steps:
+1.) Create separate .ts file => export default { "Status":"Success","Response": {} ,"Errors": [] }
+2.) Import it in req component=>  import * as gridData from './loyalty-grid';
+3.) create varibale to read the response=> loyaltyResponse = gridData.default.Response;
+-------------------------------------------------------------------------------------------------
+204 response code=> 
+No Content success status response code indicates that the request has succeeded, but that the client doesn't need to go away from its current page
+---------------------------------
+can i add click event on anchor tag angular
+=> <a (click)= "onClickLoyaltyShiftMatrixItem('N', neutral.MovementTo)">
+=> (click)="!!onGoToPage2()" 
+ !! ==> will prevent the default action from happening by converting the return of your method to a boolean. If it's a void method, then this will become false.
+-------------------------------------------------------------------------------------
+1.)NPS
+point1) => {{promoters.toFixed(2)}} => to keep two decimals
+point2) => [ngStyle]="{width: promoters +'%'}"    [ngStyle]="{color:'green';}"
+		   [ngClass]="{'neutrals_nps':rowData.CurrentNPS>=7,'promoters_nps': (rowData.CurrentNPS >= 9}"
+		   [ngClass]="loyaltyShiftWidth?'loyality-count':'loyality-count minCount'"
+point3) => 
+point2) => No Data Scenario *ngIf="npsScore !=null;else noDataScore"    here, #noDataScore is id of HTML element i,e <div #noDataScore>
+point4) =>  number pipe
+
+2.)Average Rating
+1) Close Button
+ onAvgPanelClose(){
+    this.isVisible = !this.isVisible;
+    this.avgDisaplay = this.isVisible ? 'block': 'none';
+ }
+ (click) = onAvgPanelClose()
+ [style.display]="avgDisaplay"
+ 
+************************************************************************
+ Angular 2 data attributes:
+  we can use # or let ==> 
+ <li *ngFor="#section of sections" data-value="{{ section.value }}">
+   {{ section.text }}
+ </li>
+ 
+ 1) Using getAttribute ==> event.currentTarget.getAttribute("attrName")
+ TS==>>  attr.data-typename angular 4
+ getContactDetails(event:any){
+  event.preventDefault();
+  let clickedElement = event.currentTarget;
+  if(clickedElement.classList.contains('collapsed') == true){
+    let type = '';
+    type = clickedElement.getAttribute("data-typename")
+    let data = {"custId":this.selectedCustomerId,"type":type};
+    this.influencerTypes.emit(data);
+  }
+}
+***HMTL***
+<div class="{{ (custDetails.SurveySentCnt > 0) ? 
+				(i > 0) ? 'card-header collapsed' : 'card-header default') : 
+				'card-header collapsed disabled'}}" 
+				data-toggle="collapse" [attr.href]="'#collapse'+ i" 
+				(click)="getContactDetails($event)" 
+				[attr.data-typename]="custDetails.InfluencerTypeName">
+-----------------------------------------------------------
+2) Using dataset ==> event.target.dataset.sectionvalue
+<ol class="viewer-nav">
+    <li *ngFor="let section of sections" 
+        [attr.data-sectionvalue]="section.value"
+        (click)="get_data($event)">
+        {{ section.text }}
+    </li>  
+</ol
+
+get_data(event) {
+   console.log(event.target.dataset.sectionvalue)
+}
+****************************************************************************************************
+Asynch Awit
+
+   
