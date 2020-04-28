@@ -1,0 +1,155 @@
+1. Different ways of getting values from reactive form:
+
+	this.setupform.value[formcontrolname]
+	this.setupform.controls['therapeutic_area']
+	this.setupform.controls.therapeutic_area
+	this.setupform.get('indication').value
+********************************************************************
+
+2. Shallow copy vs Deep Copy in javascript
+	https://www.freecodecamp.org/news/copying-stuff-in-javascript-how-to-differentiate-between-deep-and-shallow-copies-b6d8c1ef09cd/
+	
+	In 3 ways we can copy objects:
+	1.) Object.assign()
+	2.) spread operator
+
+		deepCloning of nested objects
+	3.) manually copying all nested objects using spread operator
+	4.) JSON.parse(JSON.stringfy()); ==> Deep copy
+	5.) deepClone() from _lodash
+
+shallow copy => for nested object references are copied not the actual values
+				if we change the nested object property then it will be reflected for both new and old objects.
+
+**********************************************************************
+
+3. VIM Editor Commands
+	https://www.radford.edu/~mhtay/CPSC120/VIM_Editor_Commands.htm
+
+4. Dynamic Component Loading in Angular
+	https://www.youtube.com/watch?v=DuME_6LCKBI
+**********************************************************************
+5.
+	box-sizing: border-box; ==> padding and border are included in element's total width and height. And content gets shrinked accordingly.
+	cursor: default;    	==> Arrow Icon
+	cursor: pointer;    	==> Hand-icon
+
+7.Text Overflow property:	
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+**********************************************************************
+8. KeyboardEvent which(Or keyCode on IE) property returns 
+	Unicode character code (onkeypress event) 		==> A number which represents an ASCII character (A=65, a= 97)
+	Unicode key code (onkeydown or onkeyup event)   ==> actual key on the keyboard ==> (Here A and a has same keyKode = 65)
+
+
+	onkeypress(recommended) => To find out if the user is pressing a printable key (e.g. "a" or "5")
+	onkeydown or onkeyup =>    To find out if the user is pressing a function key (e.g. "F1", "CAPS LOCK" or "Home")
+
+	cross-browser solution:
+	var x = event.which || event.keyCode; 
+
+	Note: The which and keyCode property does not work on the onkeypress event for non-printable, function keys(like ctl, alt etc) 
+**********************************************************************************************************************
+9. Restrict user to enter numbers only:
+------------------------------------
+	(keypress)="validateNumber($event)"
+
+		validateNumber(e) {
+			var keycode = (e.which) ? e.which : e.keyCode;
+		if ((keycode < 48 || keycode > 57) && keycode !== 13) {
+			e.preventDefault();
+			return false;
+		}
+		}
+*****************************************************************
+10.	We can set scrollbar properties explicitly
+	scrollbar {
+		width: 8px;
+	}
+-------------------------------------------------------------
+
+11. user agent style sheet | reset style
+	- is a ”default style sheet” provided by the browser (e.g., Chrome, Firefox, Edge, etc.)
+	- it provide base styles for things like font size, borders, and spacing between elements. 
+	Solution:
+	use reset style sheet to deal with inconsistencies amongst browsers.
+		Nextgen is using => node_modules/bootstrap/scss/_resets.scss
+		few other examples => google resets, meyerweb css reset or normalize.css,
+	
+*************************************************************************
+12.Clear Floats (Clearfix)
+	Elements after a floating element will flow around it. Use the "clearfix" hack to fix the problem:
+
+	Traditional clearfix hack
+	.clearfix {
+	  overflow: auto;
+	}
+
+	The new, modern clearfix hack
+	.clearfix::after {
+	  content: "";
+	  clear: both;
+	  display: table;
+	}
+*********************************************************************
+13. ::ng-deep (When you don't have acces to child component(third party))
+
+	-disable view encapsulation for specific CSS rules,
+	-gives you access to DOM elements, which are not in your component's HTML
+	-overwrite some of the CSS properties of the child components from the parent components.	
+	-For example, if you're using Angular Material (or any other third-party library like this), some generated elements are outside of your component's 
+	 area (such as dialog) and you can't access those elements directly or using a regular CSS way.
+ 
+	importance of limiting the ::ng-deep to only children of a component by requiring the parent to be an encapsulated css class.
+	- use the ::ng-deep after the parent, not before otherwise it will override all the components in whole application
+  
+	  Component css:
+	  .my-component ::ng-deep .mat-checkbox-layout {
+		background-color: aqua;
+	  }
+	  
+	  Component template:
+	  <h1 class="my-component">
+		<mat-checkbox ....></mat-checkbox>
+	  </h1>
+	  
+	  Resulting (Angular generated) css:
+	  .my-component[_ngcontent-c1] .mat-checkbox-layout {
+		background-color: aqua;
+	  }
+
+**************************************************************************************
+14. :host-context (When you to have access child component(created by you))
+	Benefit ==>  you can define your 'normal' and themed/alternative css right next to each other which is very handy.
+
+	For example I have a black <h1> header inside a component I designed, and I want the ability to change it to white 
+	when it's displayed on a dark themed background.
+
+	If I didn't have access to the source, I may have to do this in the css for the parent:
+		.theme-dark widget-box ::ng-deep h1 { color: white; }
+
+	But instead with :host-context you can do this inside the component(your created child component)
+	 h1 
+	 {
+		 color: black;       // default color
+
+		 :host-context(.theme-dark) &
+		 {
+			 color: white;   // color for dark-theme
+		 }
+
+		 // OR set an attribute 'outside' with [attr.theme]="'dark'"
+
+		 :host-context([theme='dark']) &
+		 {
+			 color: white;   // color for dark-theme
+		 }
+	 }
+ 
+**********************************************************************
+15. View Encapulation
+
+	CSSCSS Encapsulation with Angular Components
+	https://coryrylan.com/blog/css-encapsulation-with-angular-components
